@@ -67,13 +67,13 @@ namespace GameStore.App
                 }
 
                 //search history
-                if (response == 2)
-                {
+                //if (response == 2)
+                //{
                     
-                }
+                //}
 
                 //exit
-                else if (response == 3)
+                else if (response == 2)
                 {
                     Console.WriteLine("Exiting application. Thank you.");
                     break;
@@ -114,6 +114,10 @@ namespace GameStore.App
                     checkIfInt = int.Parse(response);
                     break;
                 }
+                else
+                {
+                    Console.WriteLine("Invalid input." + "\n");
+                }
             } while (int.TryParse(response, out checkIfInt));
             
         }
@@ -136,15 +140,15 @@ namespace GameStore.App
             do
             {
                 Console.WriteLine("What would you like to do?");
-                Console.WriteLine("1: Make an order, 2: Search history, or 3: Exit");
+                Console.WriteLine("1: Make an order or 2: Exit");
                 response = Console.ReadLine();
 
                 //this will check if response is a number and if the number is numbers 1-3
-                if (!int.TryParse(response, out checkIfInt) || int.Parse(response) <= 0 || int.Parse(response) > 3)
+                if (!int.TryParse(response, out checkIfInt) || int.Parse(response) <= 0 || int.Parse(response) > 2)
                 {
                     Console.WriteLine($"{response} does not exist" + "\n");
                 }
-            } while ((!int.TryParse(response, out checkIfInt) || int.Parse(response) <= 0 || int.Parse(response) > 3));
+            } while ((!int.TryParse(response, out checkIfInt) || int.Parse(response) <= 0 || int.Parse(response) > 2));
             //same check. If it's not a number or a number from 1-3, ask for user to enter a response again
             Console.WriteLine();
             checkIfInt = int.Parse(response);
