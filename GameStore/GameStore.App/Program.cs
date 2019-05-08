@@ -21,9 +21,7 @@ namespace GameStore.App
         public static void RunUI()
         {
             OrderRepository orderRepository = Dependencies.CreateRestaurantRepository();
-            var locations = orderRepository.GetCustomer("John", "Smith");
-
-            Console.WriteLine(locations);
+            
 
             
 
