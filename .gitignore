@@ -553,4 +553,7 @@ $RECYCLE.BIN/
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 
+/GameStore/GameStore.App/SecretConfiguration.cs
+
 # End of https://www.gitignore.io/api/git,csharp,windows,visualstudio,visualstudiocode
+
