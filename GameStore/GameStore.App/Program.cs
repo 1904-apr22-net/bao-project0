@@ -112,6 +112,7 @@ namespace GameStore.App
                 {
                     //checkIfInt becomes gameId
                     checkIfInt = int.Parse(response);
+                    break;
                 }
             } while (int.TryParse(response, out checkIfInt));
             
