@@ -23,7 +23,7 @@ namespace GameStore.App
             OrderRepository orderRepository = Dependencies.CreateRestaurantRepository();
             
 
-            
+
 
             while (true)
             {
@@ -50,6 +50,7 @@ namespace GameStore.App
                         {
                             addCustomerToOrder(firstName,lastName, orderRepository);
                             Console.WriteLine("\n" + "Here is a list of games:");
+                            //display all games
                             displayGames(orderRepository);
                             break;
                         }
@@ -58,7 +59,15 @@ namespace GameStore.App
                         string str = Console.ReadLine();
                         if (checkIfInteger(str))
                         {
-                            if (int.Parse(str).Equals(2))
+                            int option = int.Parse(str);
+                            //do
+                            //{
+                            //    if (option <= 0 || option > 2)
+                            //    {
+                            //        Console.WriteLine("Invalid input. Going back to main menu." + "\n");
+                            //    }
+                            //} while (option <= 0 || option > 2);
+                            if (option.Equals(2))
                             {
                                 break;
                             }
@@ -86,21 +95,25 @@ namespace GameStore.App
             int customerId = orderRepository.GetCustomerId(firstName, lastName);
             orderRepository.AddCustomerToOrder(customerId);
         }
+
+        //check if name exists
         static bool checkName(string firstName, string lastName, OrderRepository orderRepository)
         {
-            string fullName = firstName + " " + lastName;
-            if (orderRepository.GetCustomer(firstName, lastName) == fullName)
+            var customerName = orderRepository.GetCustomer2(firstName, lastName);
+            if (customerName.FirstName.Equals(firstName) && customerName.LastName.Equals(lastName))
             {
                 return true;
             }
             return false;
         }
+
+        //display list of games
         static void displayGames(OrderRepository orderRepository)
         {
             var games = orderRepository.GetGames();
             foreach (var game in games)
             {
-                Console.WriteLine($"{game.GameId}: {game.Name}");
+                Console.WriteLine($"{game.GameId}: {game.Name}, ${game.Price}");
             }
             int checkIfInt;
             string response;
@@ -128,10 +141,10 @@ namespace GameStore.App
             return int.TryParse(str, out checkIfInt);
         }
 
-        static void addGamesToOrder()
-        {
+        //static void addGamesToOrder()
+        //{
 
-        }
+        //}
 
         static int WhatDoesCustomerWantToDo()
         {

@@ -27,7 +27,42 @@ namespace GameStore.DataAccess
                     return firstName + " " +lastName;
                 }
             }
+
+            //db.Customer.FirstOrDefault()
+
             return null;
+        }
+
+        public Library.Customer GetCustomer2(string firstName, string lastName)
+        {
+            var customer = _dbContext.Customer.FirstOrDefault(c =>
+                c.FirstName.ToUpper().Equals(firstName.ToUpper()) && c.LastName.ToUpper().Equals(lastName.ToUpper()));
+            
+            if (customer == null)
+            {
+                return null;
+            }
+
+            return new Library.Customer
+            {
+                CustomerId = customer.CustomerId,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+        }
+
+        public Library.GameOrder GetGameOrderId(int customerId) {
+            var order = _dbContext.GameOrder.OrderByDescending(o => o.OrderId).FirstOrDefault(o => o.CustomerId.Equals(customerId));
+            if (order == null)
+            {
+                return null;
+            }
+
+            return new Library.GameOrder
+            {
+                Id = order.OrderId,
+                DateTime = order.OrderTime
+            };
         }
 
         public int GetCustomerId(string firstName, string lastName)
@@ -53,9 +88,9 @@ namespace GameStore.DataAccess
         {
             var db = new GameStoreContext();
 
-            foreach (var n in db.GameStore)
+            foreach (var item in db.GameStore)
             {
-                if (n.Name == name)
+                if (item.Name == name)
                 {
                     return name;
                 }

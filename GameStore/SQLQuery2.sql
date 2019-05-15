@@ -1,25 +1,32 @@
 --CREATE DATABASE GameStore;
 
+--DROP TABLE OrderItem;
+--DROP TABLE ItemInventory;
+--DROP TABLE GameOrder;
+--DROP TABLE Customer;
+--DROP TABLE GameStore;
+--DROP TABLE Game;
 
---DROP TABLE Store;
-CREATE TABLE Store(
+
+
+CREATE TABLE GameStore(
 	StoreId INT NOT NULL IDENTITY,
 	Name NVARCHAR(200) NOT NULL,
 	State NVARCHAR(200) NOT NULL,
 	CONSTRAINT PK_StoreId PRIMARY KEY (StoreId)
 );
 
---DROP TABLE Customer;
+
 CREATE TABLE Customer(
 	CustomerId INT NOT NULL IDENTITY,
 	FirstName NVARCHAR(200) NOT NULL,
 	LastName NVARCHAR(200) NOT NULL,
-	DefaultStore INT,
+	DefaultStore INT NOT NULL,
 	CONSTRAINT PK_CustomerId PRIMARY KEY(CustomerId),
-	FOREIGN KEY (DefaultStore) REFERENCES Store(StoreId)
+	FOREIGN KEY (DefaultStore) REFERENCES GameStore(StoreId)
 );
 
---DROP TABLE Game;
+
 CREATE TABLE Game(
 	GameId INT NOT NULL IDENTITY,
 	Name NVARCHAR(200) NOT NULL,
@@ -27,36 +34,36 @@ CREATE TABLE Game(
 	CONSTRAINT PK_GameId PRIMARY KEY(GameId)
 );
 
---DROP TABLE GameOrder;
+
 CREATE TABLE GameOrder(
 	OrderId INT NOT NULL IDENTITY,
-	CustomerId INT,
-	StoreId INT,
+	CustomerId INT NOT NULL,
+	StoreId INT NOT NULL,
 	OrderTime DATETIME NOT NULL,
 	CONSTRAINT PK_OrderId PRIMARY KEY(OrderId),
 	FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId),
-	FOREIGN KEY (StoreId) REFERENCES Store(StoreId)
+	FOREIGN KEY (StoreId) REFERENCES GameStore(StoreId)
 );
 
---DROP TABLE OrderItem;
+
 CREATE TABLE OrderItem(
 	OrderItemId INT NOT NULL IDENTITY,
-	OrderId INT,
-	GameId INT,
+	OrderId INT NOT NULL,
+	GameId INT NOT NULL,
 	Quantity INT DEFAULT 0,
 	CONSTRAINT PK_OrderItemId PRIMARY KEY(OrderItemId),
 	FOREIGN KEY (OrderId) REFERENCES GameOrder(OrderId), 
 	FOREIGN KEY (GameId) REFERENCES Game(GameId)
 );
 
---DROP TABLE ItemInventory;
+
 CREATE TABLE ItemInventory(
 	ItemInventoryId INT NOT NULL IDENTITY,
-	StoreId INT,
-	GameId INT,
+	StoreId INT NOT NULL,
+	GameId INT NOT NULL,
 	Quantity INT DEFAULT 0,
 	CONSTRAINT PK_ItemInventoryId PRIMARY KEY(ItemInventoryId),
-	FOREIGN KEY (StoreId) REFERENCES Store(StoreId),
+	FOREIGN KEY (StoreId) REFERENCES GameStore(StoreId),
 	FOREIGN KEY (GameId) REFERENCES Game(GameId)
 );
 
@@ -64,16 +71,16 @@ CREATE TABLE ItemInventory(
 INSERT INTO GameStore (Name, State) VALUES
 	('GameStop','Illinois');
 
-INSERT INTO Store (Name, State) VALUES
+INSERT INTO GameStore (Name, State) VALUES
 	('Target','Michigan');
 
-INSERT INTO Store (Name, State) VALUES
+INSERT INTO GameStore (Name, State) VALUES
 	('Disc Replay','Oregon');
 
-INSERT INTO Store (Name, State) VALUES
+INSERT INTO GameStore (Name, State) VALUES
 	('Walmart','Florida');
 
-INSERT INTO Store (Name, State) VALUES
+INSERT INTO GameStore (Name, State) VALUES
 	('Best Buy','Virginia');
 
 --Customer
